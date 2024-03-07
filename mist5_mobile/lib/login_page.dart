@@ -113,12 +113,13 @@ class _LoginPageState extends State<LoginPage> {
       ),
       obscureText: !_isPasswordVisible,
     );
-  } // debugPrint("Username : " + usernameController.text);
-  // debugPrint("Password : " + passwordController.text);
+  } 
 
   Widget _loginBtn() {
     return ElevatedButton(
       onPressed: () {
+        // debugPrint("Username : " + usernameController.text);
+        // debugPrint("Password : " + passwordController.text);
         navigateToNextPage(context);
       },
       child: const SizedBox(
