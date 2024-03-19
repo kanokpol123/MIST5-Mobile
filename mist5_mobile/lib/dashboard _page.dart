@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'book_list_widget.dart';
 
 class SecondPage extends StatelessWidget {
+  final String apiUrl = 'http://dekdee2.informatics.buu.ac.th:8070/api/books';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +19,7 @@ class SecondPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Text(
-          'This is the second page',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      body: BookListWidget(apiUrl: apiUrl), // Display book list here
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
