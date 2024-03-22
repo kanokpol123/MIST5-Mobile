@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'dashboard _page.dart';
+import 'dashboard_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -143,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
 void navigateToNextPage(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => SecondPage()),
+    MaterialPageRoute(builder: (context) => DashboardPage()),
   );
 }
 
