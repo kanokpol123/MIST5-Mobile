@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'dart:convert';
+import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dashboard_page.dart';
+import 'package:crypto/crypto.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,8 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool _isPasswordVisible =
-      false; // สร้างตัวแปรเพื่อเก็บสถานะการแสดง/ซ่อนรหัสผ่าน
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +114,24 @@ class _LoginPageState extends State<LoginPage> {
       ),
       obscureText: !_isPasswordVisible,
     );
-  } 
+  }
 
   Widget _loginBtn() {
     return ElevatedButton(
       onPressed: () {
-        // debugPrint("Username : " + usernameController.text);
-        // debugPrint("Password : " + passwordController.text);
-        navigateToNextPage(context);
+        String username = usernameController.text;
+        String password = passwordController.text;
+
+        // Check if username and password are not empty
+        if (username.isNotEmpty && password.isNotEmpty) {
+          // Hash the password using PBKDF2
+
+          // Send request to API for authentication
+          authenticateUser(username, password);
+        } else {
+          // Handle case where username or password is empty
+          print('Please enter both username and password');
+        }
       },
       child: const SizedBox(
         width: double.infinity,
@@ -138,12 +149,35 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void authenticateUser(String username, String password) async {
+  final apiUrl = 'http://dekdee2.informatics.buu.ac.th:8070/api/hash_password';
+  final response = await http.post(Uri.parse(apiUrl), body: {
+    'username': username,
+    'password': password,
+  });
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = jsonDecode(response.body);
+    bool isAuthenticated = data['status'];
+
+    if (isAuthenticated) {
+      // Authentication successful
+      navigateToNextPage(context);
+    } else {
+      // Handle invalid credentials here
+      print('Invalid username or password');
+    }
+  } else {
+    // Handle API request error here
+    print('Failed to authenticate user');
+  }
 }
 
-void navigateToNextPage(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => DashboardPage()),
-  );
+  void navigateToNextPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardPage()),
+    );
+  }
 }
-
