@@ -53,9 +53,7 @@ class DashboardSecondPage extends StatelessWidget {
               title: Text('ดูสรุปหนังสือตรวจแล้ว'),
               onTap: () {
                 Navigator.pop(context); // ปิด Drawer ก่อนเปลี่ยนหน้า
-                if (!Navigator.canPop(context)) {
-                  navigateToFirstPage(context);
-                }
+                navigateToFirstPage(context);
               },
               leading: Icon(
                 Icons.check_circle_outline,
@@ -65,10 +63,7 @@ class DashboardSecondPage extends StatelessWidget {
             ListTile(
               title: Text('ดูสรุปหนังสือทั้งหมด'),
               onTap: () {
-                Navigator.pop(context); // ปิด Drawer ก่อนเปลี่ยนหน้า
-                if (!Navigator.canPop(context)) {
-                  navigateToSecondtPage(context);
-                }
+                Navigator.pop(context);
               },
               leading: Icon(
                 Icons.library_books_outlined,
@@ -84,14 +79,8 @@ class DashboardSecondPage extends StatelessWidget {
 
 void navigateToFirstPage(BuildContext context) {
   Navigator.pushReplacement(
+    // ใช้ pushReplacement แทน push
     context,
     MaterialPageRoute(builder: (context) => DashboardPage()),
-  );
-}
-
-void navigateToSecondtPage(BuildContext context) {
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => DashboardSecondPage()),
   );
 }

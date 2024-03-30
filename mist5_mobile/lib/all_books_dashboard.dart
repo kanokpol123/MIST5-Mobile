@@ -66,112 +66,6 @@ class _AllDashboardState extends State<AllDashboard> {
             return Column(
               children: [
                 SizedBox(height: 20),
-                Container(
-                    child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconTheme(
-                              data: IconThemeData(size: 10),
-                              child: Icon(
-                                Icons.circle,
-                                color: Color(0xFFFF9900),
-                              ),
-                            ), // Icon หน้า Text
-                            SizedBox(width: 5), // ระยะห่างระหว่าง Icon กับ Text
-                            Text(
-                              'หนังสือภายในบริษัท',
-                              style: TextStyle(fontSize: 10),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconTheme(
-                              data: IconThemeData(size: 10),
-                              child: Icon(
-                                Icons.circle,
-                                color: Color(0xFF00afb2),
-                              ),
-                            ),
-                            SizedBox(width: 5),
-                            Text('หนังสือส่งนอกบริษัท',
-                                style: TextStyle(fontSize: 10)),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconTheme(
-                              data: IconThemeData(size: 10),
-                              child: Icon(
-                                Icons.circle,
-                                color: Color(0xFF990099),
-                              ),
-                            ),
-                            SizedBox(width: 5),
-                            Text('หนังสือภายรับเข้าบริษัท',
-                                style: TextStyle(fontSize: 10)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-                // Pie Chart
-                Expanded(
-                  flex: 3,
-                  child: PieChart(
-                    PieChartData(
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 0,
-                      sections: [
-                        PieChartSectionData(
-                          value: counts[1].toDouble(),
-                          color: Color(0xFF00afb2),
-                          title:
-                              '${((counts[1] / counts[0]) * 100).toStringAsFixed(1)}%',
-                          showTitle: true,
-                          titleStyle: TextStyle(color: Colors.white),
-                          radius: 120,
-                        ),
-                        PieChartSectionData(
-                          value: counts[2].toDouble(),
-                          color: Color(0xFF990099),
-                          title:
-                              '${((counts[2] / counts[0]) * 100).toStringAsFixed(1)}%',
-                          showTitle: true,
-                          titleStyle: TextStyle(color: Colors.white),
-                          radius: 120,
-                        ),
-                        PieChartSectionData(
-                          value: counts[3].toDouble(),
-                          color: Color(0xFFFF9900),
-                          title:
-                              '${((counts[3] / counts[0]) * 100).toStringAsFixed(1)}%',
-                          showTitle: true,
-                          titleStyle: TextStyle(color: Colors.white),
-                          radius: 120,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -232,7 +126,7 @@ class _AllDashboardState extends State<AllDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือตรวจแล้วทั้งหมด',
-                                            style: TextStyle(fontSize: 20),
+                                            style: TextStyle(fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -310,7 +204,7 @@ class _AllDashboardState extends State<AllDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือที่ยังไม่เสร็จ',
-                                            style: TextStyle(fontSize: 20),
+                                            style: TextStyle(fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -394,7 +288,7 @@ class _AllDashboardState extends State<AllDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือที่รอตรวจสอบ',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),
@@ -421,8 +315,7 @@ class _AllDashboardState extends State<AllDashboard> {
                           padding: EdgeInsets.all(
                               8), // กำหนด Padding ทั้งสี่ด้านเป็น 8 พิกเซล
                           child: FutureBuilder<int>(
-                            future:
-                                ApiConstants.countBookVerifyReject(),
+                            future: ApiConstants.countBookVerifyReject(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -473,7 +366,7 @@ class _AllDashboardState extends State<AllDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือที่ตรวจไม่ผ่าน',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),
@@ -500,8 +393,7 @@ class _AllDashboardState extends State<AllDashboard> {
                           padding: EdgeInsets.all(
                               8), // กำหนด Padding ทั้งสี่ด้านเป็น 8 พิกเซล
                           child: FutureBuilder<int>(
-                            future:
-                                ApiConstants.countBookVerifyPass(),
+                            future: ApiConstants.countBookVerifyPass(),
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -552,7 +444,7 @@ class _AllDashboardState extends State<AllDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือที่ตรวจผ่าน',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),

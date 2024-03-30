@@ -51,17 +51,16 @@ class DashboardPage extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('ดูสรุปหนังสือตรวจแล้ว'),
+              title: Text('ดูสรุปหนังสือที่ตรวจแล้ว'),
               onTap: () {
-                Navigator.pop(context); // ปิด Drawer ก่อนเปิดหน้าใหม่
-                navigateToFirstPage(context);
+                Navigator.pop(context); 
               },
               leading: Icon(
-                Icons.check_circle_outline,
+                Icons.library_books_outlined,
                 color: const Color.fromARGB(255, 0, 0, 0),
               ),
             ),
-            ListTile(
+                        ListTile(
               title: Text('ดูสรุปหนังสือทั้งหมด'),
               onTap: () {
                 Navigator.pop(context); // ปิด Drawer ก่อนเปิดหน้าใหม่
@@ -77,13 +76,6 @@ class DashboardPage extends StatelessWidget {
       ),
     );
   }
-}
-
-void navigateToFirstPage(BuildContext context) {
-  Navigator.pushReplacement( // ใช้ pushReplacement แทน push
-    context,
-    MaterialPageRoute(builder: (context) => DashboardPage()),
-  );
 }
 
 void navigateToSecondPage(BuildContext context) {
