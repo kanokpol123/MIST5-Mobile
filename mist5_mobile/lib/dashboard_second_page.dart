@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'all_books_dashboard.dart';
 import 'dashboard_page.dart';
+import 'login_page.dart';
 
 class DashboardSecondPage extends StatelessWidget {
   final String apiUrl = 'http://dekdee2.informatics.buu.ac.th:8070/api/books';
@@ -15,13 +16,21 @@ class DashboardSecondPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout, color: Colors.white),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+            IconButton(
+              icon: Icon(Icons.logout, color: Colors.white),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          LoginPage()), // ตัวอย่างเท่านี้เท่านั้น คุณต้องเปลี่ยนเป็นหน้า Login ของคุณ
+                  (Route<dynamic> route) =>
+                      false, // ล้าง stack ของหน้าปัจจุบันทั้งหมด
+                );
+              },
+            ),
         ],
+        iconTheme: IconThemeData(color: Colors.white)
       ),
       body: AllDashboard(),
       drawer: Drawer(
