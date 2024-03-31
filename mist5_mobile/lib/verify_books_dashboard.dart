@@ -73,7 +73,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                       flex: 1,
                       child: Container(
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconTheme(
                               data: IconThemeData(size: 10),
@@ -95,7 +95,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                       flex: 1,
                       child: Container(
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconTheme(
                               data: IconThemeData(size: 10),
@@ -103,7 +103,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                 Icons.circle,
                                 color: Color(0xFF00afb2),
                               ),
-                            ), 
+                            ),
                             SizedBox(width: 5),
                             Text('หนังสือส่งนอกบริษัท',
                                 style: TextStyle(fontSize: 10)),
@@ -115,7 +115,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                       flex: 1,
                       child: Container(
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconTheme(
                               data: IconThemeData(size: 10),
@@ -123,7 +123,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                 Icons.circle,
                                 color: Color(0xFF990099),
                               ),
-                            ), 
+                            ),
                             SizedBox(width: 5),
                             Text('หนังสือภายรับเข้าบริษัท',
                                 style: TextStyle(fontSize: 10)),
@@ -233,7 +233,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือตรวจแล้วทั้งหมด',
-                                            style: TextStyle(fontSize: 20),
+                                            style: TextStyle(fontSize: 14),
                                           ),
                                         ],
                                       ),
@@ -241,7 +241,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                       Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontSize: 36,
+                                          fontSize: 38,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -324,7 +324,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                                   Text(
                                                     'หนังสือที่ตรวจผ่าน',
                                                     style:
-                                                        TextStyle(fontSize: 14),
+                                                        TextStyle(fontSize: 12),
                                                   ),
                                                 ],
                                               ),
@@ -332,7 +332,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                               Text(
                                                 snapshot.data.toString(),
                                                 style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -411,7 +411,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                                   Text(
                                                     'หนังสือที่ตรวจไม่ผ่าน',
                                                     style:
-                                                        TextStyle(fontSize: 14),
+                                                        TextStyle(fontSize: 12),
                                                   ),
                                                 ],
                                               ),
@@ -419,7 +419,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                               Text(
                                                 snapshot.data.toString(),
                                                 style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -499,7 +499,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือภายใน',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),
@@ -507,7 +507,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                       Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -578,7 +578,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือส่งนอก',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),
@@ -586,7 +586,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                       Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -657,7 +657,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                           SizedBox(width: 8),
                                           Text(
                                             'หนังสือรับเข้า',
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 12),
                                           ),
                                         ],
                                       ),
@@ -665,7 +665,7 @@ class _VerifyDashboardState extends State<VerifyDashboard> {
                                       Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
