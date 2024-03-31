@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dashboard_page.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,6 +17,33 @@ class _LoginPageState extends State<LoginPage> {
   bool _passwordError = false;
 
   @override
+  void initState() {
+    super.initState();
+    initBannerAd();
+  }
+
+  late BannerAd bannerAd;
+  bool isAdLoaded = false;
+  var adUnit = "ca-app-pub-3940256099942544/6300978111";
+
+  initBannerAd() {
+    bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: adUnit,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          isAdLoaded = true;
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print(error);
+        },
+      ),
+      request: const AdRequest(),
+    );
+    bannerAd.load();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -31,6 +59,13 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: _page(),
+        bottomNavigationBar: isAdLoaded
+            ? SizedBox(
+                height: bannerAd.size.height.toDouble(),
+                width: bannerAd.size.width.toDouble(),
+                child: AdWidget(ad: bannerAd),
+              )
+            : const SizedBox(),
       ),
     );
   }
