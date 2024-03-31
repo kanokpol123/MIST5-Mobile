@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'dashboard _page.dart';
+import 'package:http/http.dart' as http;
+import 'dashboard_page.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,10 +12,38 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool _isPasswordVisible =
-      false; // สร้างตัวแปรเพื่อเก็บสถานะการแสดง/ซ่อนรหัสผ่าน
+  bool _isPasswordVisible = false;
+  bool _usernameError = false;
+  bool _passwordError = false;
 
   @override
+  void initState() {
+    super.initState();
+    initBannerAd();
+  }
+
+  late BannerAd bannerAd;
+  bool isAdLoaded = false;
+  var adUnit = "ca-app-pub-3940256099942544/6300978111";
+
+  initBannerAd() {
+    bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: adUnit,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          isAdLoaded = true;
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print(error);
+        },
+      ),
+      request: const AdRequest(),
+    );
+    bannerAd.load();
+  }
+
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -30,6 +59,13 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: _page(),
+        bottomNavigationBar: isAdLoaded
+            ? SizedBox(
+                height: bannerAd.size.height.toDouble(),
+                width: bannerAd.size.width.toDouble(),
+                child: AdWidget(ad: bannerAd),
+              )
+            : const SizedBox(),
       ),
     );
   }
@@ -51,9 +87,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 50),
             _inputField("Username", usernameController,
-                icon: Icons.account_circle),
+                icon: Icons.account_circle, error: _usernameError),
             const SizedBox(height: 20),
-            _passwordField(),
+            _passwordField(error: _passwordError),
             const SizedBox(height: 50),
             _loginBtn(),
           ],
@@ -63,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _inputField(String hintText, TextEditingController controller,
-      {bool isPassword = false, IconData? icon}) {
+      {bool isPassword = false, IconData? icon, bool error = false}) {
     var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(18),
       borderSide: const BorderSide(color: Colors.white),
@@ -78,12 +114,20 @@ class _LoginPageState extends State<LoginPage> {
         enabledBorder: border,
         focusedBorder: border,
         prefixIcon: icon != null ? Icon(icon, color: Colors.white) : null,
+        errorText: error ? 'Please enter $hintText' : null,
       ),
       obscureText: isPassword && !_isPasswordVisible,
+      onChanged: (_) {
+        if (error) {
+          setState(() {
+            error = false;
+          });
+        }
+      },
     );
   }
 
-  Widget _passwordField() {
+  Widget _passwordField({bool error = false}) {
     return TextField(
       style: const TextStyle(color: Colors.white),
       controller: passwordController,
@@ -110,18 +154,22 @@ class _LoginPageState extends State<LoginPage> {
             });
           },
         ),
+        errorText: error ? 'Please enter Password' : null,
       ),
       obscureText: !_isPasswordVisible,
+      onChanged: (_) {
+        if (error) {
+          setState(() {
+            error = false;
+          });
+        }
+      },
     );
-  } 
+  }
 
   Widget _loginBtn() {
     return ElevatedButton(
-      onPressed: () {
-        // debugPrint("Username : " + usernameController.text);
-        // debugPrint("Password : " + passwordController.text);
-        navigateToNextPage(context);
-      },
+      onPressed: _validateInputs,
       child: const SizedBox(
         width: double.infinity,
         child: Text(
@@ -138,12 +186,80 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
 
-void navigateToNextPage(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SecondPage()),
-  );
-}
+  void _validateInputs() {
+    String username = usernameController.text;
+    String password = passwordController.text;
 
+    setState(() {
+      _usernameError = username.isEmpty;
+      _passwordError = password.isEmpty;
+    });
+
+    if (!_usernameError && !_passwordError) {
+      // Send request to API for authentication
+      authenticateUser(username, password);
+    } else {
+      // Handle case where username or password is empty
+      print('Please enter both username and password');
+    }
+  }
+
+  void authenticateUser(String username, String password) async {
+    final apiUrl =
+        'http://dekdee2.informatics.buu.ac.th:8070/api/hash_password';
+    final response = await http.post(Uri.parse(apiUrl), body: {
+      'username': username,
+      'password': password,
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      bool isAuthenticated = data['status'];
+
+      if (isAuthenticated) {
+        // Authentication successful
+        navigateToNextPage(context);
+      } else {
+        // Handle invalid credentials here
+        print('Invalid username or password');
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Username or password is incorrect.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } else {
+      // Handle API request error here
+      print('Failed to authenticate user');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Failed to authenticate user.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void navigateToNextPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardPage()),
+    );
+  }
+}
