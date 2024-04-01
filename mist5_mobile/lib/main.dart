@@ -3,14 +3,15 @@ import 'login_page.dart';
 import 'api_constants.dart'; // Import the ApiConstants file
 import 'package:bcrypt/bcrypt.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Future.delayed(
-    Duration(seconds: 10),
+    Duration(seconds: 5),
   );
   FlutterNativeSplash.remove();
+  MobileAds.instance.initialize();
   // Call the method to fetch and print the sum of book IDs
   ApiConstants.countAll().then((count) {
     print('count of book IDs: $count');
